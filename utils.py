@@ -25,7 +25,7 @@ def _resolve_data_dir() -> Path:
     # Some deployments keep receptor folders directly beside the app files
     # Detect this by checking for subdirectories that match the receptor naming pattern
     has_receptor_dirs = any(
-        path.is_dir() and len(path.name) == 4 and path.name[0].isdigit()
+        path.is_dir() and any(path.glob("*.pdb"))
         for path in app_root.iterdir()
     )
     if has_receptor_dirs:
