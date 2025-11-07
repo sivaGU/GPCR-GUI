@@ -6,8 +6,40 @@ import json
 import pandas as pd
 import os
 
-# Path to the GPCR Structures directory
-DATA_DIR = Path(r"C:\Users\madas\Downloads\GPCR Amino Acid Residue Analysis\GPCR Structures")
+
+def _resolve_data_dir() -> Path:
+    """Resolve the directory that contains all receptor folders."""
+    env_path = os.getenv("GPCR_DATA_DIR")
+    if env_path:
+        candidate = Path(env_path).expanduser()
+        if candidate.exists():
+            return candidate
+
+    app_root = Path(__file__).resolve().parent
+
+    # Prefer a dedicated "GPCR Structures" subfolder if present
+    preferred = app_root / "GPCR Structures"
+    if preferred.exists():
+        return preferred
+
+    # Some deployments keep receptor folders directly beside the app files
+    # Detect this by checking for subdirectories that match the receptor naming pattern
+    has_receptor_dirs = any(
+        path.is_dir() and len(path.name) == 4 and path.name[0].isdigit()
+        for path in app_root.iterdir()
+    )
+    if has_receptor_dirs:
+        return app_root
+
+    # As a final fallback, allow using a sibling "GPCR Structures" directory one level up
+    parent_preferred = app_root.parent / "GPCR Structures"
+    if parent_preferred.exists():
+        return parent_preferred
+
+    return app_root
+
+
+DATA_DIR = _resolve_data_dir()
 
 def collect_receptors():
     """
