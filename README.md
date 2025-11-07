@@ -2,6 +2,8 @@
 
 This repository contains a modern, user-friendly Streamlit app for interactive exploration and visualization of ligand-binding pocket features across **369 GPCR receptor structures**. All data and results for these receptors are included—no setup or data preparation required!
 
+Website Link: https://gpcr-gui-gzivpn3v5yg7fro3wmccqk.streamlit.app/
+
 ## What You Get
 - **3D visualization** of all 369 GPCR receptor structures and their ligand-binding pockets
 - **Pocket residue composition, conservation, and analysis metrics** for each receptor
@@ -181,3 +183,4 @@ For questions or issues:
 4. Contact the development team
 =======
 >>>>>>> 5e9b018f570123cf88509b73aa216d95f99400f3
+
